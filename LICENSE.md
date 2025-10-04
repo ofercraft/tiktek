@@ -1,6 +1,12 @@
+**Disclaimer**
+
+This is an unofficial, fan-made application. The developer of this application is not the creator of and is not responsible for the content (e.g., textbook solutions) provided through this app. All content is provided by an external, unaffiliated service.
+
+---
+
 MIT License
 
-Copyright (c) 2024 feldman
+Copyright (c) 2025 feldman
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
