@@ -1,5 +1,5 @@
 ﻿<p align="center">
-  <img src="screenshots/tiktek cover.png" alt="Tiktek App Cover">
+  <img src="screenshots/cover.png" alt="Tiktek App Cover">
 </p>
 
 Tiktek is an Android application that allows users to find solutions to problems in textbooks.
