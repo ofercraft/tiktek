@@ -11,9 +11,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.feldman.tiktek.ui.screens.BookDetailScreen
 import com.feldman.tiktek.ui.screens.BooksScreen
-import com.feldman.tiktek.ui.screens.SolutionViewerScreen
+import com.feldman.tiktek.ui.screens.BookScreen
+import com.feldman.tiktek.ui.screens.SolutionScreen
 
 
 object Routes {
@@ -24,7 +24,7 @@ object Routes {
 
 
 @Composable
-fun TiktekNavHost() {
+fun NavHost() {
     val nav = rememberNavController()
     NavHost(navController = nav, startDestination = Routes.BOOKS) {
 
@@ -49,10 +49,14 @@ fun TiktekNavHost() {
             val bookId = backStackEntry.arguments?.getString("bookId") ?: ""
             val titleEnc = backStackEntry.arguments?.getString("bookTitle") ?: ""
             val title = java.net.URLDecoder.decode(titleEnc, Charsets.UTF_8.name())
-            BookDetailScreen(
+            BookScreen(
                 bookId = bookId,
                 title = title,
-                onBack = { nav.popBackStack() },
+                onBack = {
+                    if (nav.previousBackStackEntry != null) {
+                        nav.popBackStack()
+                    }
+                },
                 onOpenSolution = { url ->
                     val encoded = java.net.URLEncoder.encode(url, Charsets.UTF_8.name())
                     nav.navigate("solutionViewer/$encoded")
@@ -71,7 +75,7 @@ fun TiktekNavHost() {
             val encoded = backStackEntry.arguments?.getString("imageUrl") ?: ""
             val decodedUrl = java.net.URLDecoder.decode(encoded, Charsets.UTF_8.name())
 
-            SolutionViewerScreen(
+            SolutionScreen(
                 imageUrl = decodedUrl,
                 onBack = { nav.navigateUp() },
                 modifier = Modifier.windowInsetsPadding(WindowInsets.systemBars)

@@ -17,7 +17,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -46,7 +45,7 @@ import com.feldman.tiktek.LocalRepository
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BookDetailScreen(
+fun BookScreen(
     bookId: String,
     title: String,
     onBack: () -> Unit,
@@ -58,7 +57,11 @@ fun BookDetailScreen(
         key = "book-$bookId",
         factory = object : androidx.lifecycle.ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return BookDetailViewModel(bookId, repo) as T
+                if (modelClass.isAssignableFrom(BookDetailViewModel::class.java)) {
+                    @Suppress("UNCHECKED_CAST")
+                    return BookDetailViewModel(bookId, repo) as T
+                }
+                throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
             }
         }
     )
@@ -174,32 +177,5 @@ fun BookDetailScreen(
                 }
             }
         }
-    }
-}
-
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun SolutionViewerScreen(imageUrl: String, onBack: () -> Unit, modifier: Modifier = Modifier) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Solution") },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-                    }
-                }
-            )
-        },
-        modifier = modifier
-    ) { padding ->
-        AsyncImage(
-            model = imageUrl,
-            contentDescription = null,
-            modifier = Modifier
-                .padding(padding)
-                .fillMaxSize()
-        )
     }
 }
